@@ -1,0 +1,3 @@
+config_vol/config.yaml
+**/__pycache__   
+*.db

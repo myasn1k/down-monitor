@@ -1,0 +1,16 @@
+---
+# ctis info
+ctis_url: https://something.com
+ctis_username: user
+ctis_password: pass
+
+# operations label
+op_label: testlabel
+
+# how many seconds to wait for a connection
+# this is used to check if the site is up, and doesn't wait
+# for the full page data to be downloaded
+timeout: 30
+
+# range +- of how much the interval must be randomized
+rand: 30
