@@ -27,6 +27,10 @@ logging.basicConfig(
 )
 
 def main(argv):
+    to_sleep = random.randrange(1, Config["rand"])
+    logging.info(f"Sleeping for {to_sleep} seconds")
+    sleep(to_sleep)
+
     logging.info("Getting operations and urls from CTIS...")
     
     ctis = CTIS(Config["ctis_url"], Config["ctis_username"], Config["ctis_password"])
@@ -86,10 +90,6 @@ def main(argv):
 
     db_sess.commit()
     db_sess.close()
-
-    to_sleep = random.randrange(1, Config["rand"])
-    logging.info(f"Sleeping for {to_sleep} seconds")
-    sleep(to_sleep)
 
     logging.info("Finished, exiting")
 
