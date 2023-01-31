@@ -24,3 +24,7 @@ Then, add it to your crontab. Example crontab entry (running every 10 minutes):
 ```
 */10 * * * * cd /home/USER/down-monitor && ./run.sh
 ```
+
+## CSV export
+
+Simply run this command: `sqlite3 -header -csv down-monitor.db "select * from downs where [WHATEVER YOU WANT];" > ../downs.csv`
