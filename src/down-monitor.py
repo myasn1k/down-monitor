@@ -30,7 +30,7 @@ def main(argv):
     logging.info("Getting operations and urls from CTIS...")
     
     ctis = CTIS(Config["ctis_url"], Config["ctis_username"], Config["ctis_password"])
-    ops_urls = ctis.get_operations_and_urls(Config["op_label"])
+    ops_urls = ctis.get_operations_and_urls(Config["op_label"], Config["delta_seconds"])
 
     logging.info(f"Found {len(ops_urls.keys())} operations")
 

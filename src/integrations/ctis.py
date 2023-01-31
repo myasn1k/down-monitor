@@ -1,5 +1,5 @@
 import requests
-
+from datetime import datetime, timedelta
 
 class CTIS():
 
@@ -10,17 +10,30 @@ class CTIS():
         self.url = url
         self.CTIS_login(username, password)
 
-    def do_req(self, url):
+    def do_get(self, url):
         return requests.get(self.url + url, headers=self.headers).json()
+    
+    def do_post(self, url, json):
+        return requests.post(self.url + url, headers=self.headers, json=json).json()
 
-    # Horrible, to enhance
-    def get_operations_and_urls(self, op_label):
-        # TODO: add where _created gte today minus a configurable interval
-        ops = self.do_req(
-            f"/x-operations?where=%7B%22labels%22%3A%20%5B%22{op_label}%22%5D%7D")["_items"]
+    def get_operations_and_urls(self, op_label, delta_seconds):
+        start_date = datetime.utcnow() - timedelta(seconds=delta_seconds)
+        json = {
+                 "where": {
+                     "labels": {
+                         "$in": [
+                             "ddos"
+                         ]
+                     },
+                     "_created": {
+                         "$gte": start_date.strftime("%Y-%m-%d %H:%M:%SZ")
+                     }
+                 }
+            }
+        ops = self.do_post("/x-operations/get?page=1&max_results=25", json)["_items"]
         res = {}
         for op in ops:
-            rels = self.do_req("/urls/relationships/x-operations/"+op['_id'])
+            rels = self.do_get("/urls/relationships/x-operations/"+op['_id'])
             res[op["name"]] = []
             for rel in rels['_items']:
                 res[op["name"]].append(rel['value'])

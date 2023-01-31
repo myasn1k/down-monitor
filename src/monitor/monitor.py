@@ -1,5 +1,4 @@
 import requests
-import ssl
 from config import Config
 import urllib3
 from datetime import datetime
