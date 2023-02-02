@@ -30,12 +30,28 @@ class CTIS():
                      }
                  }
             }
-        ops = self.do_post("/x-operations/get?page=1&max_results=25", json)["_items"]
+
+        ops = []
+        page = 1
+        while True:
+            tmp = self.do_post(f"/x-operations/get?page={page}&max_results=25", json)["_items"]
+            if not tmp:
+                break
+            ops += tmp
+            page += 1
+
         res = {}
         for op in ops:
-            rels = self.do_get("/urls/relationships/x-operations/"+op['_id'])
+            rels = []
+            page = 1
+            while True:
+                tmp = self.do_get("/urls/relationships/x-operations/" + op['_id'] + f"?page={page}&max_results=25")["_items"]
+                if not tmp:
+                    break
+                rels += tmp
+                page += 1
             res[op["name"]] = []
-            for rel in rels['_items']:
+            for rel in rels:
                 res[op["name"]].append(rel['value'])
         return res
 
