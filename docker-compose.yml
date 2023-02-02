@@ -6,7 +6,6 @@ services:
     volumes:
       - ./db_vol:/db
       - ./config_vol:/config
-      - ./urls:/urls
       - ./src:/app
     environment:
       PYTHONUNBUFFERED: 1
