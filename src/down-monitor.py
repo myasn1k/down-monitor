@@ -58,7 +58,7 @@ def main(argv):
 
         logging.info(f"Found {len(urls)} urls for {operation}")
 
-        with ThreadPoolExecutor(max_workers = len(urls)) as executor:
+        with ThreadPoolExecutor(max_workers = 100) as executor:
             future_to_url = {executor.submit(is_site_up, url): url for url in urls}
         for future in as_completed(future_to_url):
             url = future_to_url[future]
