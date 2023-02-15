@@ -22,10 +22,10 @@ class CTIS():
                  "where": {
                      "labels": {
                          "$in": [
-                             "ddos"
+                             op_label
                          ]
                      },
-                     "_created": {
+                     "first_seen": {
                          "$gte": start_date.strftime("%Y-%m-%d %H:%M:%SZ")
                      }
                  }
